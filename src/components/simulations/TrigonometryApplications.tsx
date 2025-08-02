@@ -106,6 +106,9 @@ const TrigonometryApplications: React.FC<TrigonometryApplicationsProps> = ({ mod
     }
   }, [application, parameters, calculations]);
 
+  // Pre-calculate navigation result for JSX usage
+  const navigationResult = application === 'navigation' ? calculations.result as { north: number; east: number } : { north: 0, east: 0 };
+
   return (
     <group>
       {/* Application Selection */}
@@ -231,12 +234,11 @@ const TrigonometryApplications: React.FC<TrigonometryApplicationsProps> = ({ mod
             <Text position={[0, 2.5, 0]} fontSize={0.15} color="white">N</Text>
             <Text position={[2.5, 0, 0]} fontSize={0.15} color="white">E</Text>
             
-            const result = calculations.result as { north: number; east: number };
-            <Text position={[-0.5, result.north * 0.05, 0]} fontSize={0.12} color="#4ecdc4">
-              N: {result.north.toFixed(1)}m
+            <Text position={[-0.5, navigationResult.north * 0.05, 0]} fontSize={0.12} color="#4ecdc4">
+              N: {navigationResult.north.toFixed(1)}m
             </Text>
-            <Text position={[result.east * 0.05, -0.3, 0]} fontSize={0.12} color="#96ceb4">
-              E: {result.east.toFixed(1)}m
+            <Text position={[navigationResult.east * 0.05, -0.3, 0]} fontSize={0.12} color="#96ceb4">
+              E: {navigationResult.east.toFixed(1)}m
             </Text>
             <Text position={[0.5, 0.5, 0]} fontSize={0.15} color="#ff6b6b">
               {parameters.angle}°
